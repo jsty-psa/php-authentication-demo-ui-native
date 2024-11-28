@@ -4,25 +4,26 @@ This is a sample application utilizing the PhilSys Authentication API via PHP.
 
 ## Installation
 
-**Install [Composer](https://getcomposer.org/ "Composer Main Page") for this project**
+1. **Install [Composer](https://getcomposer.org/ "Composer Main Page") for this project**
 
-**Install all dependencies in composer.json**
+2. **Install all dependencies in composer.json**
 
 ```bash
 composer install
 ```
 
-**Create environment variable inside the auth_demo_ui folder.**
+3. **Create environment variable inside the auth_demo_ui folder.**
 
+- For Windows
 ```bash
-# Windows
 type nul > php_apis\constants.php
-
-# Linux
+```
+- For Linux
+```bash
 touch php_apis/constants.php
 ```
 
-**Fill-up properties inside the environment variable.**
+4. **Fill-up properties inside the environment variable.**
 
 ```PHP
 <?php
@@ -72,19 +73,19 @@ touch php_apis/constants.php
     const CERT_PASSPHRASE = [P12 Password Phrase];
 ```
 
-**Create a folder named keys**
+5. **Create a folder named keys**
 
 ```bash
 mkdir keys
 ```
 
-**Create and upload all the keys needed in this location**
+6. **Create and upload all the keys needed in this location**
 
 ```
 keys/[Partner_ID]
 ```
 
-**Run the application**
+7. **Run the application**
 
 ## Contributing
 
