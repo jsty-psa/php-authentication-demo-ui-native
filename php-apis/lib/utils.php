@@ -1,7 +1,10 @@
 <?php
 
 function getTime() {
-    return gmdate("Y-m-d\TH:i:s.z\Z");
+    $microtime = microtime(true);
+    $milliseconds = sprintf("%03d", ($microtime - floor($microtime)) * 1000);
+    $time = gmdate('Y-m-d\TH:i:s', $microtime);
+    return $time . '.' . $milliseconds . 'Z';
 }
 
 function base64_url_decode($base64URL) {

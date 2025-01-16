@@ -1,0 +1,9 @@
+{
+    "require": {
+        "gamegos/jws": "^1.0",
+        "phpseclib/phpseclib": "^3.0",
+        "amphp/amp": "^2.0",
+        "amphp/http-client": "^4.6",
+        "amphp/parallel": "^1.4"
+    }
+}

@@ -12,26 +12,28 @@
     $partner_id = PHILSYS_RP_PARTNER_ID;
     
     if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $data = json_decode(file_get_contents('php://input'), true);
+
         $authentication_request_body = [
-            "id" => isset($_REQUEST["input_ekyc"]) && $_REQUEST["input_ekyc"] === "on" ? "philsys.identity.kyc" : "philsys.identity.auth",
+            "id" => isset($data["input_ekyc"]) && $data["input_ekyc"] === "on" ? "philsys.identity.kyc" : "philsys.identity.auth",
             "version" => PHILSYS_VERSION,
             "requestTime" => getTime(),
             "env" => PHILSYS_ENVIRONMENT,
             "domainUri" => PHILSYS_BASE_URL,
             "transactionID" => PHILSYS_DUMMY_TRANSACTION_ID,
             "requestedAuth" => [
-                "otp" => isset($_REQUEST["input_otp"]) && $_REQUEST["input_otp"] === "on",
-                "demo" => isset($_REQUEST["input_demo"]) && $_REQUEST["input_demo"] === "on",
-                "bio" => isset($_REQUEST["input_bio"]) && $_REQUEST["input_bio"] === "on",
+                "otp" => isset($data["input_otp"]) && $data["input_otp"] === "on",
+                "demo" => isset($data["input_demo"]) && $data["input_demo"] === "on",
+                "bio" => isset($data["input_bio"]) && $data["input_bio"] === "on",
             ],
             "consentObtained" => true,
-            "individualId" => $_REQUEST["individual_id"],
-            "individualIdType" => $_REQUEST["individual_id_type"],
+            "individualId" => $data["individual_id"],
+            "individualIdType" => $data["individual_id_type"],
             "request" => [
                 "timestamp" => getTime(),
-                "otp" => isset($_REQUEST["input_otp"]) && $_REQUEST["input_otp"] === "on" ? $_REQUEST["input_otp_value"] : null,
-                "demographics" => isset($_REQUEST["input_demo"]) && $_REQUEST["input_demo"] === "on" ? json_decode(preg_replace("/'([^']+)'/", '"$1"', $_REQUEST["input_demo_value"]), true) : null,
-                "biometrics" => isset($_REQUEST["input_bio"]) && $_REQUEST["input_bio"] === "on" ? json_decode(preg_replace("/'([^']+)'/", '"$1"', $_REQUEST["input_bio_value"]), true) : null,
+                "otp" => isset($data["input_otp"]) && $data["input_otp"] === "on" ? $data["input_otp_value"] : null,
+                "demographics" => isset($data["input_demo"]) && $data["input_demo"] === "on" ? json_decode(preg_replace("/'([^']+)'/", '"$1"', $data["input_demo_value"]), true) : null,
+                "biometrics" => isset($data["input_bio"]) && $data["input_bio"] === "on" ? json_decode(preg_replace("/'([^']+)'/", '"$1"', $data["input_bio_value"]), true) : null,
             ]
         ];
 
@@ -65,7 +67,7 @@
             "Content-Type: application/json",
         ];
 
-        $authentication_url = isset($_REQUEST["input_ekyc"]) && $_REQUEST["input_ekyc"] === "on" ? PHILSYS_EKYC_URL : PHILSYS_AUTH_URL;
+        $authentication_url = isset($data["input_ekyc"]) && $data["input_ekyc"] === "on" ? PHILSYS_EKYC_URL : PHILSYS_AUTH_URL;
 
         $ch = curl_init($authentication_url);
 
