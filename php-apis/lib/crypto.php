@@ -6,6 +6,7 @@ use phpseclib3\Crypt\Random;
 
 function symmetric_encrypt($message, $key) {
     $nonce = Random::string(16);
+    
     $aes = new AES('gcm');
     $aes->setNonce($nonce);
     $aes->setKey($key);
@@ -24,31 +25,25 @@ function symmetric_decrypt($encrypted_data, $key) {
     $tag = substr($encrypted_data, -($block_size + $tag_size), $tag_size);
     $encrypted_kyc_data = substr($encrypted_data, 0, -($block_size + $tag_size));
 
-    // Create an AES-GCM cipher instance
     $aes = new AES('gcm');
-    $aes->setKey($key);
 
-    // Set the nonce and the tag
+    $aes->setKey($key);
     $aes->setNonce($nonce);
     $aes->setTag($tag);
 
     $decrypted_data = $aes->decrypt($encrypted_kyc_data);
 
-    // Check if decryption was successful
     if ($decrypted_data === false) {
-        // Handle decryption failure (e.g., invalid tag or incorrect key)
         return false;
     }
 
-    // Assuming the decrypted data is JSON
     $response_map = json_decode($decrypted_data, true);
 
-    // Return the response map
     return $response_map;
 }
 
-function asymmetric_encrypt($message, $privateKeyPem) {
-    $rsa =  RSA::load($privateKeyPem);
+function asymmetric_encrypt($message, $certificate) {
+    $rsa =  RSA::load($certificate);
 
     $result = $rsa->encrypt($message);
     
