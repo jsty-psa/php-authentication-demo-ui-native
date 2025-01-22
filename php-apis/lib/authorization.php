@@ -1,6 +1,6 @@
 <?php
 
-function getAuthorization() {
+function get_authorization() {
     $authorization_request_body = [
         "requestTime" => getTime(),
         "version" => "string",
