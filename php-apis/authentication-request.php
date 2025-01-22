@@ -63,7 +63,7 @@
 
         $authentication_request_header = [            
             "Signature: ".generate_signature($authentication_request_body, $partner_private_key),
-            "Authorization: ".getAuthorization(),
+            "Authorization: ".get_authorization(),
             "Content-Type: application/json",
         ];
 

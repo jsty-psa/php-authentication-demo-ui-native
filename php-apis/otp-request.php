@@ -1,6 +1,4 @@
 <?php
-    ini_set('display_errors', 1);
-
     require_once '../vendor/autoload.php';
     require_once 'constants.php';
     require_once 'lib/utils.php';
@@ -39,7 +37,7 @@
 
         $otp_request_header = [            
             "Signature: ".generate_signature($otp_request_body, $partner_private_key),
-            "Authorization: ".getAuthorization(),
+            "Authorization: ".get_authorization(),
             "Content-Type: application/json",
         ];
 
