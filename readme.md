@@ -87,6 +87,11 @@ keys/[Partner_ID]
 
 7. **Run the application**
 
+
+```
+docker-compose up --build
+```
+
 ## Contributing
 
 All pull requests are welcome in this environment and feel free to utilize this application.
