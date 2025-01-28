@@ -1,9 +1,9 @@
 <?php
 
-function getTime() {
+function getTime(): string {
     $microtime = microtime(true);
-    $milliseconds = sprintf("%03d", ($microtime - floor($microtime)) * 1000);
-    $time = gmdate('Y-m-d\TH:i:s', $microtime);
+    $milliseconds = str_pad((int)(($microtime - floor($microtime)) * 1000), 3, '0', STR_PAD_LEFT);
+    $time = gmdate('Y-m-d\TH:i:s', (int)$microtime);  // cast to int for seconds part
     return $time . '.' . $milliseconds . 'Z';
 }
 
