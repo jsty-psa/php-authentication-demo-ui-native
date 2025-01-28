@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
+    nginx \
+    supervisor \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Set working directory
@@ -20,11 +23,16 @@ WORKDIR /var/www
 # Copy project files
 COPY . .
 
+COPY supervisord.conf /etc/supervisor/supervisord.conf
+
+COPY ./nginx/default.conf /etc/nginx/nginx.conf
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www
 
-# Expose port 9000
-EXPOSE 9000
+# Expose port
+EXPOSE 80
 
 # Start PHP-FPM server
-CMD ["php-fpm"]
+# CMD ["php-fpm"]
+CMD ["supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
